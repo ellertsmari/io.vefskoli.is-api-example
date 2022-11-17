@@ -1,45 +1,26 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import api from '../utils/api';
 
-const AddReturn = ()=>{
-  const [user, setUser] = useState({});
-  const [comment, setComment] = useState("");
-  const [imageOrGif, setImageOrGif] = useState("");
-  const [liveVersion, setLiveVersion] = useState("");
-  const [url, setUrl] = useState("")
+const AddReview = ()=>{
+  const [feedback, setFeedback] = useState("");
+  const [vote, setVote] = useState("");
 
-  useEffect(()=>{
-    
-    const getUser = async ()=>{
-      const user = await api.get("/auth/me");
-      setUser(user);
-    }
-    getUser();
-  },[])
-  console.log(user);
-  const addReturn = ()=>{
-
-    const project = {
-      //createdAt and updatedAt are done by the server so don't worry about them
-      //isPicked is not used anymore so you can skip it
-      //coAuthors is an array of students who did the assignment with you (it is nice to be able to do group working guides but maybe not in your scope?)
-      user,
-      comment,
-      imageOrGif,
-      liveVersion,
-      url,
-      assignmentId:"5f13205ab279dc27c467ca56", //you need to set the assignment of the guide you are trying to return
-      coAuthors: "[]"
-    }
-    api.post("/assignmentReturns",project)
+  const addReview = async()=>{
+    const assignmentId = "5f13205ab279dc27c467ca56"; //you need to set the assignment of the guide you are trying to review 
+    const reviewId = await api.post("/reviews",{assignmentId});
+    console.log(reviewId.data.data)
+    await api.patch(`/reviews/${reviewId.data.data.reviewId}`, {feedback,vote});
   }
   return (<>
-    comment:     <input type="text" placeholder="comment" onChange={(e)=>setComment(e.target.value)} value={comment}></input>
-    imageOrGif:  <input type="text" placeholder="imageOrGif" onChange={(e)=>setImageOrGif(e.target.value)} value={imageOrGif}></input>
-    liveVersion: <input type="text" placeholder="liveversion" onChange={(e)=>setLiveVersion(e.target.value)} value={liveVersion}></input>
-    url:         <input type="text" placeholder="url" onChange={(e)=>setUrl(e.target.value)} value={url}></input>  
-    <button onClick={addReturn}>submit</button>
+    feedback:    <input type="text" placeholder="feedback" onChange={(e)=>setFeedback(e.target.value)} value={feedback}></input>
+    Pass:        
+    <input type="radio" name="vote" onChange={(e)=>setVote(e.target.value)} value="pass"></input>
+    Pass and Recommend to Gallery             
+    <input type="radio" name="vote" onChange={(e)=>setVote(e.target.value)} value="recommend"></input>
+    Fail! Looser!!
+    <input type="radio" name="vote" onChange={(e)=>setVote(e.target.value)} value="no-pass"></input>
+    <button onClick={addReview}>submit</button>
   </>)
 }
 
-export default AddReturn;
+export default AddReview;
