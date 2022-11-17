@@ -5,7 +5,7 @@ const AddReview = ()=>{
   const [feedback, setFeedback] = useState("");
   const [vote, setVote] = useState("");
 
-  const addReview = async()=>{
+  const addReview = async()=>{//handle errors so that people can't submit empty reviews
     const assignmentId = "5f13205ab279dc27c467ca56"; //you need to set the assignment of the guide you are trying to review 
     const reviewId = await api.post("/reviews",{assignmentId});
     console.log(reviewId.data.data)
