@@ -7,12 +7,12 @@ function GetReturns() {
   const [returns, setReturns] = useState([]);
   useEffect(()=>{
     const getReturns = async ()=>{
-      const user = await login({email:"test3@test.is", password:"123456"})
+      await login({email:"test3@test.is", password:"123456"})
       const g = await api.get('/assignmentReturns');
       setReturns(g)
     }
     getReturns();
-  },[])
+  },[login])
   console.log(returns)
   return (
     <div className="App">

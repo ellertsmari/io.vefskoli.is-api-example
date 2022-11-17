@@ -7,12 +7,12 @@ function GetReviews() {
   const [reviews, setReviews] = useState([]);
   useEffect(()=>{
     const getReviews = async ()=>{
-      const user = await login({email:"test3@test.is", password:"123456"})
+      await login({email:"test3@test.is", password:"123456"})
       const g = await api.get('/reviews');
       setReviews(g)
     }
     getReviews();
-  },[])
+  },[login])
   console.log(reviews)
   return (
     <div className="App">
