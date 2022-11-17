@@ -2,23 +2,23 @@ import {useEffect, useState} from 'react';
 import api from '../utils/api'
 import { useAuth } from '../utils/authContext';
 
-function GetReturns() {
+function GetReviews() {
   const {login} = useAuth();
-  const [returns, setReturns] = useState([]);
+  const [reviews, setReviews] = useState([]);
   useEffect(()=>{
-    const getReturns = async ()=>{
+    const getReviews = async ()=>{
       const user = await login({email:"test3@test.is", password:"123456"})
-      const g = await api.get('/assignmentReturns');
-      setReturns(g)
+      const g = await api.get('/reviews');
+      setReviews(g)
     }
-    getReturns();
+    getReviews();
   },[])
-  console.log(returns)
+  console.log(reviews)
   return (
     <div className="App">
-      getting returns
+      getting reviews
     </div>
   );
 }
 
-export default GetReturns;
+export default GetReviews;
