@@ -1,18 +1,29 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import api from '../utils/api';
 
 const AddReturn = ()=>{
+  const [user, setUser] = useState({});
   const [comment, setComment] = useState("");
   const [imageOrGif, setImageOrGif] = useState("");
   const [liveVersion, setLiveVersion] = useState("");
   const [url, setUrl] = useState("")
 
+  useEffect(()=>{
+    
+    const getUser = async ()=>{
+      const user = await api.get("/auth/me");
+      setUser(user);
+    }
+    getUser();
+  },[])
+  console.log(user);
   const addReturn = ()=>{
 
     const project = {
       //createdAt and updatedAt are done by the server so don't worry about them
       //isPicked is not used anymore so you can skip it
       //coAuthors is an array of students who did the assignment with you (it is nice to be able to do group working guides but maybe not in your scope?)
+      user,
       comment,
       imageOrGif,
       liveVersion,
