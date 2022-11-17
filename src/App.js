@@ -1,12 +1,15 @@
 import './App.css';
-import GetGuides from './components/GetGuides'
+import GetGuides from './components/GetGuides';
+import GetReturns from './components/GetReturns';
+import { AuthProvider } from "./utils/authContext";
 
 function App() {
 
   return (
-    <div className="App">
+    <AuthProvider>
       <GetGuides></GetGuides>
-    </div>
+      <GetReturns></GetReturns>
+    </AuthProvider>
   );
 }
 

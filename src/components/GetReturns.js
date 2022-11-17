@@ -1,22 +1,22 @@
 import {useEffect, useState} from 'react';
 import api from '../utils/api'
-import useAuth from '../utils/authContext';
+import { useAuth } from '../utils/authContext';
 
 function GetReturns() {
   const {login, isAuthenticated} = useAuth();
   const [returns, setReturns] = useState([]);
   useEffect(()=>{
     const getReturns = async ()=>{
-      //const user = await api.
+      const user = await login({email:"test3@test.is", password:"123456"})
       const g = await api.get('/assignmentReturns');
-      setGuides(g)
+      setReturns(g)
     }
     getReturns();
   },[])
-  console.log(guides)
+  console.log(returns)
   return (
     <div className="App">
-      getting guires
+      getting returns
     </div>
   );
 }

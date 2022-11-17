@@ -13,7 +13,7 @@ function GetGuides() {
   console.log(guides)
   return (
     <div className="App">
-      getting guires
+      getting guides
     </div>
   );
 }

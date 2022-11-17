@@ -1,16 +1,16 @@
 import React, { createContext, useState, useEffect, useContext } from "react";
-import { useRouter } from "next/router";
+//import { useRouter } from "next/router";
 import api from "./api";
-import useSWR from "swr";
+//import useSWR from "swr";
 
 export const AuthContext = createContext({});
 
 export const AuthProvider = ({ children }) => {
-  const router = useRouter();
+  const router = false //useRouter();
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  const { data, error } = useSWR("/auth/me", api.get);
+  const data = api.get("/auth/me");
   const fetchedUser = data && data.data;
   const finished = Boolean(data);
   const hasUser = Boolean(fetchedUser && fetchedUser._id);
